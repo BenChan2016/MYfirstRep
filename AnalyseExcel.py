@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Sun Oct  2 23:14:29 2016
-
-@author: jacksiu
-"""
-
 
 import pandas as pd
 import sys
