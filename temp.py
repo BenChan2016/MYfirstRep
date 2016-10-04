@@ -92,13 +92,16 @@ show_regression_statistic(df)
 
 
 
-"3. show null value of Y, X1, X2,...."
+"3. show null value of Y, X1, X2,....   <======ignore Data quality for a moment"
 
-"4. choose to ignore null value or not"
+"4. choose to ignore null value or not <======ignore Data quality for a moment "
 
-"5. based on answer of 4, recalculate the basic regression statistic"
 
-"6. ask usr to input X1,X2,X3,....."
+"5. ask usr to input X1,X2,X3,....."
+
+
+"6. based on answer of 4, build regression model and calculate the basic regression statistic"
+
 
 "7. show predicited vlaue"
 
