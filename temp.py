@@ -36,7 +36,31 @@ def system_input_file(usrinput):
 def detect_file_extension(usrinput):
     file_extension = re.split("\.",usrinput) #get the extension name
     return file_extension[1]
+
+
+def drop_non_digital(df):
+    no_digit_df = df
+    drop_row_list = []                                            # 
+    column_length = df.shape[0]                                  #http://stackoverflow.com/questions/15943769/how-to-get-row-count-of-pandas-dataframe
+    row_length = df.shape[1]
+    print(df.iloc[2,2])
+    print(column_length,row_length)
+    for r in range(0,column_length):
+        for c in range(1,row_length):
+            try:
+                float(no_digit_df.iloc[r,c])
+            except ValueError:
+                drop_row_list.append(r)
+    print(drop_row_list)
+    no_digit_df = no_digit_df.drop(no_digit_df.index[drop_row_list])    #http://stackoverflow.com/questions/15943769/how-to-get-row-count-of-pandas-dataframe
+    no_digit_df = no_digit_df.dropna()                           #http://stackoverflow.com/questions/13413590/how-to-drop-rows-of-pandas-dataframe-whose-value-of-certain-column-is-nan
+   # no_digit_df = no_digit_df.reset_index()
+   # no_digit_df = no_digit_df.drop('index',1)
+   # df = df.drop('column_name', 1)
+    print(no_digit_df)
+    #return(no_digit_df)
     
+        
 "Show basic regression_statistic and print it to users" 
 def show_regression_statistic(excel_file):
     df_regression = pd.DataFrame(excel_file)
@@ -119,6 +143,7 @@ def print_line():
     print("================================================================")
 
 
+
 "===============================================above is functions======================================================"
 
 "===============================================below is implementation================================================="
@@ -147,7 +172,7 @@ menu_parameter = True
         
 usrinput = user_input_file_location()
 df = system_input_file(usrinput)
-
+drop_non_digital(df)
 
 
 #2. show menu for users to choose what they want
@@ -160,6 +185,8 @@ while menu_parameter:
     print("D. Build your regression ")
     ans = input("Please input your choice    ")        
 # Scope(local variable) http://stackoverflow.com/questions/7382638/python-variable-scope-in-if-statements
+    if ans.lower()=="q":
+        break
     
     if ans.lower()=="a":
         usrinput = user_input_file_location()
