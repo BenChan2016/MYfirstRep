@@ -90,10 +90,11 @@ def show_number_of_null_values():
 def clean_all_null():
     return
 "Calculate the predicated value Y based on users' input and show the regression question"    
-def get_predictor():
+def get_predictor(linear_equation):
     print('Please enter the Xn in "X1,X2,X3...,Xn" format')
+    print("In your case, your n is "+str(len(linear_equation.coef_)))
     usrinput = input(">>> Input: ")
-    print("Your file location is "+usrinput) 
+    print("Your input is "+usrinput) 
     Xn_pred = re.split(",", usrinput)     #http://stackoverflow.com/questions/10974932/python-split-string-based-on-regular-expression
     Xn_pred = [float(i) for i in Xn_pred] #float(i) for i in lst]
     #old fashion way: for i in range(0,len(a)) :
@@ -107,6 +108,7 @@ def make_prediction(Xn_pred, lr, df):
     for i in range(0,len(lr.coef_)):
         result += lr.coef_[i]*Xn_pred[i] 
     result += lr.intercept_
+    print("\n")
     print( str(df.columns.values[1])+' is predicted to be '+str(result) )
     
 "Check which assumption is violated and print it to usrs"
@@ -178,7 +180,7 @@ while menu_parameter:
         data_frame, linear_equation = linear_regression(df)
         print_equation(data_frame,linear_equation)
         
-        menu_parameter0 = input("Enter P to show matrix plot or anyother button to continue")
+        menu_parameter0 = input("Enter P to show matrix plot or anyother button to continue   ")
         if menu_parameter0.lower()=="p": # The graph doesn't show , i dont know why
             scatter_matrix(df,alpha=0.2, figsize=(6, 6), diagonal='kde')
             plt.show()
@@ -187,7 +189,8 @@ while menu_parameter:
         #Go into prediction section
         
         if menu_parameter1.lower()=="yes":
-            predictors = get_predictor()
+            print("\n")
+            predictors = get_predictor(linear_equation)
             make_prediction(predictors,linear_equation,data_frame)
             print("\n")
         elif menu_parameter1.lower()=="no":
