@@ -8,7 +8,9 @@ This is a temporary script file.
 
 import pandas as pd
 from sklearn.linear_model import LinearRegression
-import re
+import re   #regular expression
+from pandas.tools.plotting import scatter_matrix
+import matplotlib.pyplot as plt
 
 
 "User task: Ask user to inputs a file location and return xlxs"
@@ -19,13 +21,22 @@ def user_input_file_location():
     
 "System task: read xlxs and turn it into dataframe"
 def system_input_file(usrinput):
-    xlsx = pd.ExcelFile(usrinput)
-    excel_file = xlsx.parse(0)
-    print("\n")
-    print(excel_file.head())
-    return excel_file
+    file_extension = detect_file_extension(usrinput)
     
-
+    if(file_extension.lower()=="xlsx"):
+        file_input_to_system = pd.read_excel(usrinput)
+    if(file_extension.lower()=="csv"):
+        file_input_to_system = pd.read_csv(usrinput)
+    
+    
+    print("\n")
+    print(file_input_to_system.head())
+    return file_input_to_system
+    
+def detect_file_extension(usrinput):
+    file_extension = re.split("\.",usrinput) #get the extension name
+    return file_extension[1]
+    
 "Show basic regression_statistic and print it to users" 
 def show_regression_statistic(excel_file):
     df_regression = pd.DataFrame(excel_file)
@@ -141,35 +152,49 @@ df = system_input_file(usrinput)
 
 while menu_parameter:
     print("\n")
-    print("A. Show your complete input file ")
-    print("B. Show part of your input file ")
-    print("C. Build your regression ")
+    print("A. Input your file again")
+    print("B. Show your complete input file ")
+    print("C. Show part of your input file ")
+    print("D. Build your regression ")
     ans = input("Please input your choice    ")        
+# Scope(local variable) http://stackoverflow.com/questions/7382638/python-variable-scope-in-if-statements
     
     if ans.lower()=="a":
+        usrinput = user_input_file_location()
+        df = system_input_file(usrinput) #This acts like a pointer and df is a global variable
+    
+    if ans.lower()=="b":
         print("\n")
         print(df)
         
-    elif ans.lower()=="b":
+    elif ans.lower()=="c":
         row_number = input("How many row would you like to display   ")
         row_number = int(row_number)
         print("\n")
         print(str(df[:row_number]))
         
-    elif ans.lower()=="c":
+    elif ans.lower()=="d":
         show_regression_statistic(df) # 3. show regression statistic
         data_frame, linear_equation = linear_regression(df)
         print_equation(data_frame,linear_equation)
         
-        menu_parameter1 = input("Enter Yes to make prediciton or No to exit the program or anybutton back to main menu   ")
+        menu_parameter0 = input("Enter P to show matrix plot or anyother button to continue")
+        if menu_parameter0.lower()=="p": # The graph doesn't show , i dont know why
+            scatter_matrix(df,alpha=0.2, figsize=(6, 6), diagonal='kde')
+            plt.show()
+            
+        menu_parameter1 = input("Enter Yes to make prediciton or No to exit the program or anyother button back to main menu   ")
         #Go into prediction section
+        
         if menu_parameter1.lower()=="yes":
             predictors = get_predictor()
             make_prediction(predictors,linear_equation,data_frame)
             print("\n")
-        if menu_parameter1.lower()=="no":
+        elif menu_parameter1.lower()=="no":
             menu_parameter = False
             exit()
+            
+        
         
         
 "3. show null value of Y, X1, X2,.... i think we should ignore data quality"
