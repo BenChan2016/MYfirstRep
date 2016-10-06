@@ -11,6 +11,8 @@ from sklearn.linear_model import LinearRegression
 import re   #regular expression
 from pandas.tools.plotting import scatter_matrix
 import matplotlib.pyplot as plt
+import numpy as np
+
 
 
 "User task: Ask user to inputs a file location and return xlxs"
@@ -38,27 +40,11 @@ def detect_file_extension(usrinput):
     return file_extension[1]
 
 
-def drop_non_digital(df):
-    no_digit_df = df
-    drop_row_list = []                                            # 
-    column_length = df.shape[0]                                  #http://stackoverflow.com/questions/15943769/how-to-get-row-count-of-pandas-dataframe
-    row_length = df.shape[1]
-    print(df.iloc[2,2])
-    print(column_length,row_length)
-    for r in range(0,column_length):
-        for c in range(1,row_length):
-            try:
-                float(no_digit_df.iloc[r,c])
-            except ValueError:
-                drop_row_list.append(r)
-    print(drop_row_list)
-    no_digit_df = no_digit_df.drop(no_digit_df.index[drop_row_list])    #http://stackoverflow.com/questions/15943769/how-to-get-row-count-of-pandas-dataframe
-    no_digit_df = no_digit_df.dropna()                           #http://stackoverflow.com/questions/13413590/how-to-drop-rows-of-pandas-dataframe-whose-value-of-certain-column-is-nan
-   # no_digit_df = no_digit_df.reset_index()
-   # no_digit_df = no_digit_df.drop('index',1)
-   # df = df.drop('column_name', 1)
-    print(no_digit_df)
-    #return(no_digit_df)
+def drop_space(df):
+    data_frame = df.replace('\s+', np.nan, regex=True)   #http://stackoverflow.com/questions/26837998/pandas-replace-nan-with-blank-empty-string
+    data_frame = df.replace('[^\d]', np.nan, regex=True) #change the field to null when the first digital is not digital
+    ### You can add the regular expression you like
+    return data_frame.dropna()  # drop null
     
         
 "Show basic regression_statistic and print it to users" 
@@ -113,6 +99,9 @@ def show_number_of_null_values():
     return
 def clean_all_null():
     return
+    
+    
+    
 "Calculate the predicated value Y based on users' input and show the regression question"    
 def get_predictor(linear_equation):
     print('Please enter the Xn in "X1,X2,X3...,Xn" format')
@@ -172,7 +161,8 @@ menu_parameter = True
         
 usrinput = user_input_file_location()
 df = system_input_file(usrinput)
-drop_non_digital(df)
+print("drop_non_ditgal:")
+
 
 
 #2. show menu for users to choose what they want
@@ -183,6 +173,7 @@ while menu_parameter:
     print("B. Show your complete input file ")
     print("C. Show part of your input file ")
     print("D. Build your regression ")
+    print("E. Drop Space and Drop Null  ")
     ans = input("Please input your choice    ")        
 # Scope(local variable) http://stackoverflow.com/questions/7382638/python-variable-scope-in-if-statements
     if ans.lower()=="q":
@@ -203,6 +194,8 @@ while menu_parameter:
         print(str(df[:row_number]))
         
     elif ans.lower()=="d":
+        print("non:")
+        
         show_regression_statistic(df) # 3. show regression statistic
         data_frame, linear_equation = linear_regression(df)
         print_equation(data_frame,linear_equation)
@@ -212,7 +205,7 @@ while menu_parameter:
             scatter_matrix(df,alpha=0.2, figsize=(6, 6), diagonal='kde')
             plt.show()
             
-        menu_parameter1 = input("Enter Yes to make prediciton or No to exit the program or anyother button back to main menu   ")
+        menu_parameter1 = input("Enter <Yes> to make prediciton or <No> to exit the program or anyother button back to main menu   ")
         #Go into prediction section
         
         if menu_parameter1.lower()=="yes":
@@ -222,7 +215,15 @@ while menu_parameter:
             print("\n")
         elif menu_parameter1.lower()=="no":
             menu_parameter = False
-            exit()
+            
+            
+    elif ans.lower()=="e":
+            data_frame_no_space_null = drop_space(df)
+            menu_parameter2 = input("Enter <Yes> to save the change to your program or anyother button to cancel ")
+            if menu_parameter2.lower() == "yes":
+                df = data_frame_no_space_null      #save the dataframe without any null to the previous dataframe, applying to the whole program
+            
+            
             
         
         
