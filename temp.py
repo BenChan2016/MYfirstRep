@@ -40,7 +40,7 @@ def detect_file_extension(usrinput):
     return file_extension[1]
 
 
-def drop_space(df):
+def drop_space_nondigital(df):
     data_frame = df.replace('\s+', np.nan, regex=True)   #http://stackoverflow.com/questions/26837998/pandas-replace-nan-with-blank-empty-string
     data_frame = df.replace('[^\d]', np.nan, regex=True) #change the field to null when the first digital is not digital
     ### You can add the regular expression you like
@@ -218,7 +218,7 @@ while menu_parameter:
             
             
     elif ans.lower()=="e":
-            data_frame_no_space_null = drop_space(df)
+            data_frame_no_space_null = drop_space_nondigital(df)
             menu_parameter2 = input("Enter <Yes> to save the change to your program or anyother button to cancel ")
             if menu_parameter2.lower() == "yes":
                 df = data_frame_no_space_null      #save the dataframe without any null to the previous dataframe, applying to the whole program
