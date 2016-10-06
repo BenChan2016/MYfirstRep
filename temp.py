@@ -12,6 +12,7 @@ import re   #regular expression
 from pandas.tools.plotting import scatter_matrix
 import matplotlib.pyplot as plt
 import numpy as np
+import time # to measure performance
 
 
 
@@ -161,7 +162,6 @@ menu_parameter = True
         
 usrinput = user_input_file_location()
 df = system_input_file(usrinput)
-print("drop_non_ditgal:")
 
 
 
@@ -174,34 +174,48 @@ while menu_parameter:
     print("C. Show part of your input file ")
     print("D. Build your regression ")
     print("E. Drop Space and Drop Null  ")
+    print("F. Enter Data Science kit too  ")
     ans = input("Please input your choice    ")        
 # Scope(local variable) http://stackoverflow.com/questions/7382638/python-variable-scope-in-if-statements
     if ans.lower()=="q":
         break
     
-    if ans.lower()=="a":
+    elif ans.lower()=="a":
         usrinput = user_input_file_location()
         df = system_input_file(usrinput) #This acts like a pointer and df is a global variable
-    
-    if ans.lower()=="b":
+        
+    elif ans.lower()=="b":
+        start = time.time()
         print("\n")
         print(df)
+        end = time.time()
+        print(" ")
+        print("Time needed to implement this function: "+str(end - start))
         
     elif ans.lower()=="c":
+        start = time.time()
         row_number = input("How many row would you like to display   ")
         row_number = int(row_number)
         print("\n")
         print(str(df[:row_number]))
+        end = time.time()
+        print(" ")
+        print("Time needed to implement this function: "+str(end - start))
         
     elif ans.lower()=="d":
-        print("non:")
         
+        print("non:")
+        start = time.time()
         show_regression_statistic(df) # 3. show regression statistic
         data_frame, linear_equation = linear_regression(df)
         print_equation(data_frame,linear_equation)
+        end = time.time()
+        print(" ")
+        print("Time needed to implement this function: "+str(end - start))
         
         menu_parameter0 = input("Enter P to show matrix plot or anyother button to continue   ")
         if menu_parameter0.lower()=="p": # The graph doesn't show , i dont know why
+            start = time.time()
             scatter_matrix(df,alpha=0.2, figsize=(6, 6), diagonal='kde')
             plt.show()
             
@@ -209,24 +223,40 @@ while menu_parameter:
         #Go into prediction section
         
         if menu_parameter1.lower()=="yes":
+            start = time.time()
             print("\n")
             predictors = get_predictor(linear_equation)
             make_prediction(predictors,linear_equation,data_frame)
             print("\n")
+            end = time.time()
+            print(" ")
+            print("Time needed to implement this function: "+str(end - start))
+            
         elif menu_parameter1.lower()=="no":
             menu_parameter = False
             
             
     elif ans.lower()=="e":
+            start = time.time()
             data_frame_no_space_null = drop_space_nondigital(df)
             menu_parameter2 = input("Enter <Yes> to save the change to your program or anyother button to cancel ")
             if menu_parameter2.lower() == "yes":
                 df = data_frame_no_space_null      #save the dataframe without any null to the previous dataframe, applying to the whole program
+            end = time.time()
+            print(" ")
+            print("Time needed to implement this function: "+str(end - start))
             
+    elif ans.lower()=="f":
+        print("1.Time series analysis")
+        print("2.Decision Tree")
+        
+        menu_parameter3 = input("Enter <Quit> to quit the program")
+        if menu_parameter3.lower() == "quit":
+            menu_parameter = False
             
             
         
-        
+     
         
 "3. show null value of Y, X1, X2,.... i think we should ignore data quality"
 
