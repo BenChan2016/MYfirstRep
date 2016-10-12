@@ -48,9 +48,11 @@ while menu_parameter:
     print("D. Build your regression ")
     print("E. Drop Space and Drop Null  ")
     print("F. Enter Data Science kit too  ")
+    print("N. Exit")
     ans = input("Please input your choice    ")        
 # Scope(local variable) http://stackoverflow.com/questions/7382638/python-variable-scope-in-if-statements
-    if ans.lower()=="q":
+    if ans.lower()=="n":
+        menu_parameter = False
         break
     
     elif ans.lower()=="a":
@@ -131,7 +133,11 @@ while menu_parameter:
             menu_parameter = False
             
         if menu_parameter3.lower() =="2":
+            start = functions.time.time()
             functions.classification_tree_prediciton_and_diagram(df)
+            end = functions.time.time()
+            print(" ")
+            print("Time needed to implement this function: "+str(end - start))
             
 "3. show null value of Y, X1, X2,.... i think we should ignore data quality"
 

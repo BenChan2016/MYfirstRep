@@ -14,6 +14,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time # to measure performance
 from sklearn import tree
+import pydotplus
+from os import system
+
+
 
 
 
@@ -121,7 +125,12 @@ def classification_tree_prediciton_and_diagram(df):
     #print(Xn_pred)
     reshaped_Xn_pred = np.reshape(Xn_pred,(1,-1)) # need to review the reshape parameter!!!
     prediciton = clf.predict(reshaped_Xn_pred)
-    print(prediciton)
+    print(prediciton)# the following can export a dot file. But at this stage, im
+    #not sure how to parse it to png
+    #dotfile = open("/home/ben/Desktop/dtree10","w")
+    #tree.export_graphviz(clf,out_file = dotfile)
+    #dotfile.close()
+    #system("-o /home/ben/Desktop/dtree10.png")
     
 "Show number of null values and print it to users"    
 def show_number_of_null_values():
