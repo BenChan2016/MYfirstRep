@@ -13,6 +13,8 @@ from pandas.tools.plotting import scatter_matrix
 import matplotlib.pyplot as plt
 import numpy as np
 import time # to measure performance
+from sklearn import tree
+
 
 
 
@@ -94,6 +96,32 @@ def print_equation(df, lr):
         reg_equation += ' + '
     reg_equation += str(lr.intercept_)
     print(reg_equation)
+    
+    
+def classification_tree_prediciton_and_diagram(df):
+    #http://stackoverflow.com/questions/13730468/from-nd-to-1d-arrays
+    #http://stackoverflow.com/questions/7745562/appending-to-2d-lists-in-python
+
+    dfListY = df.iloc[:,1].tolist()
+    #dfListX = df.iloc[:,2:].tolist() 
+    num_of_row = df.shape[0]
+    listy   = [[]]*num_of_row
+    for i in range(0,num_of_row):      # turn row into a 2d list
+        listy[i] =df.iloc[i,2:].tolist()
+        print(listy[i])
+    
+    #print(dfListY)
+    #print(listy)
+    clf = tree.DecisionTreeClassifier()
+    clf = clf.fit(listy,dfListY)
+    print("")
+    usrinput = input("Please input predictor")
+    Xn_pred = re.split(",", usrinput)     #http://stackoverflow.com/questions/10974932/python-split-string-based-on-regular-expression
+    Xn_pred = [float(i) for i in Xn_pred] #float(i) for i in lst]
+    #print(Xn_pred)
+    reshaped_Xn_pred = np.reshape(Xn_pred,(1,-1)) # need to review the reshape parameter!!!
+    prediciton = clf.predict(reshaped_Xn_pred)
+    print(prediciton)
     
 "Show number of null values and print it to users"    
 def show_number_of_null_values():

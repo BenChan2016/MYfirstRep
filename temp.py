@@ -122,15 +122,17 @@ while menu_parameter:
     elif ans.lower()=="f":
         print("1.Time series analysis")
         print("2.Decision Tree")
-        
-        menu_parameter3 = input("Enter <Quit> to quit the program")
+        print("<Quit> to quit the program")
+        menu_parameter3 = input("Enter your choice   ")
         if menu_parameter3.lower() == "quit":
             menu_parameter = False
             
+        if menu_parameter3.lower() =="1":
+            menu_parameter = False
             
-        
-     
-        
+        if menu_parameter3.lower() =="2":
+            functions.classification_tree_prediciton_and_diagram(df)
+            
 "3. show null value of Y, X1, X2,.... i think we should ignore data quality"
 
 "4. choose to ignore null value or not i think we should ignore data quality"
