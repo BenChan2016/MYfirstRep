@@ -8,7 +8,7 @@ This is a temporary script file.
 
 
 import functions # I think this is better than from functions import * when coming to maintance cost
-
+import numpy as np
 "You should put functions.py and temp.py under same directory"
 
 #"1.ask usr to input the location of the file"
@@ -100,9 +100,30 @@ while menu_parameter:
         if menu_parameter1.lower()=="yes":
             start = functions.time.time()
             print("\n")
-            predictors = functions.get_predictor(linear_equation)
-            functions.make_prediction(predictors,linear_equation,data_frame)
-            print("\n")
+            print("Please how much data you want for validating a model, e.g. 0.2")
+            testing_percentage = input("Please Enter    ")
+            print("")
+            training_data, testing_data = functions.data_frame_split_for_training(data_frame, testing_percentage)
+            #print(training_data)
+            #print(testing_data)
+            functions.make_prediction(training_data,linear_equation)
+            
+            predicted_result_from_testing_data = functions.make_prediction(testing_data,linear_equation)
+            predicted_result_from_training_data = functions.make_prediction(training_data,linear_equation)
+            #predicted_result_from_testing_data = np.array(predicted_result_from_testing_data).astype(float)
+            #redicted_result_from_testing_data = functions.make_prediction(testing_data,linear_equation)
+            
+            dfListY = testing_data.iloc[:,1].tolist()
+            dfListY_training = training_data.iloc[:,1].tolist()
+            #dfListY = np.array(dfListY).astype(float)
+            #dfListY = testing_data.iloc[:,1].tolist()
+            
+            #print("DLLISTY")
+            #print(dfListY)
+            print("The median absolute error for testing data is " + str(functions.median_absolute_error(dfListY,predicted_result_from_testing_data)))
+            print("The median absolute error for training data is " + str(functions.median_absolute_error(dfListY_training, predicted_result_from_training_data)))
+            print("The R^2 score for testing data is " + str(functions.r2_score(dfListY,predicted_result_from_testing_data)))
+            print("The R^2 score for training data is " + str(functions.r2_score(dfListY_training, predicted_result_from_training_data)))
             end = functions.time.time()
             print(" ")
             print("Time needed to implement this function: "+str(end - start))
