@@ -23,7 +23,7 @@ from sklearn import tree
 import pydotplus
 from os import system
 from sklearn.cross_validation import train_test_split
-from sklearn.metrics import median_absolute_error,r2_score
+from sklearn.metrics import median_absolute_error,r2_score, accuracy_score
 
 
 
@@ -109,17 +109,16 @@ def print_equation(df, lr):
     print(reg_equation)
     
     
-def classification_tree_prediciton_and_diagram(df):
+def classification_tree_prediciton_for_training(df,usrinput):
     #http://stackoverflow.com/questions/13730468/from-nd-to-1d-arrays
     #http://stackoverflow.com/questions/7745562/appending-to-2d-lists-in-python
-
     dfListY = df.iloc[:,1].tolist()
     #dfListX = df.iloc[:,2:].tolist() 
     num_of_row = df.shape[0]
     listy   = [[]]*num_of_row
     for i in range(0,num_of_row):      # turn row into a 2d list
         listy[i] =df.iloc[i,2:].tolist()
-        print(listy[i])
+        #print(listy[i])
     
     #print(dfListY)
     #print(listy)
@@ -127,18 +126,36 @@ def classification_tree_prediciton_and_diagram(df):
     clf = clf.fit(listy,dfListY)
     
     print("")
-    usrinput = input("Please input predictor")
     Xn_pred = re.split(",", usrinput)     #http://stackoverflow.com/questions/10974932/python-split-string-based-on-regular-expression
     Xn_pred = [float(i) for i in Xn_pred] #float(i) for i in lst]
     #print(Xn_pred)
     reshaped_Xn_pred = np.reshape(Xn_pred,(1,-1)) # need to review the reshape parameter!!!
-    prediciton = clf.predict(reshaped_Xn_pred)
-    print(prediciton)# the following can export a dot file. But at this stage, im
+    predicition = clf.predict(reshaped_Xn_pred)
+    return predicition, clf# the following can export a dot file. But at this stage, im
     #not sure how to parse it to png
     #dotfile = open("/home/ben/Desktop/dtree10","w")
     #tree.export_graphviz(clf,out_file = dotfile)
     #dotfile.close()
     #system("-o /home/ben/Desktop/dtree10.png")
+    
+def classification_tree_prediciton_for_testing (df,clf_fitted):
+    #dfListX = df.iloc[:,2:].tolist() 
+    num_of_row = df.shape[0]
+    listy   = [[]]*num_of_row
+    for i in range(0,num_of_row):      # turn testing row into a 2d list
+        listy[i] =df.iloc[i,2:].tolist()
+        #print(listy[i])
+    
+    prediciton_testing = clf_fitted.predict(listy) # get prediciton from testing data
+    return prediciton_testing
+    
+    
+    
+def classification_tree_score(y_true, y_pred ):
+    score_normalized = accuracy_score(y_true, y_pred, normalize=True)
+    score = accuracy_score(y_true, y_pred, normalize=False)
+    return score_normalized, score
+    
     
 "Show number of null values and print it to users"    
 def show_number_of_null_values():
@@ -177,18 +194,23 @@ def transform_DFpredicition_to_array(data_frame,lr_fitted):
     prediction_array = make_prediciton_beta(listy,lr_fitted)
     return prediction_array
     
+def transform_DFXn_to_2d_array(data_frame):
+    num_of_row = data_frame.shape[0]
+    listy   = [[]]*num_of_row
+    
+    for i in range(0,num_of_row):      # turn row into a 2d list
+        listy[i] =data_frame.iloc[i,2:].tolist()
+    return listy
+    
+def transform_DFY_to_2d_array(data_frame):
+    dfListY = data_frame.iloc[:,1].tolist()
+    return dfListY
+    
 def make_prediciton_beta(Xn_pred,lr_fitted):      # Xn_pred can be a 2d array-like
     array = lr_fitted.predict(Xn_pred)            # the input for predic argument can be 2d array
     return array
     
-    
-#def make_prediction(Xn_pred, lr, df):
-#    result = 0
-#    for i in range(0,len(lr.coef_)):
-#        result += lr.coef_[i]*Xn_pred[i] 
-#    result += lr.intercept_
-#    print("\n")
-#    print( str(df.columns.values[1])+' is predicted to be '+str(result) )
+ 
     
 "Check which assumption is violated and print it to usrs"
 def check_hypothesis():

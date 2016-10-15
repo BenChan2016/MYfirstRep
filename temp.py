@@ -105,7 +105,7 @@ while menu_parameter:
             print("")
             training_data, testing_data = functions.data_frame_split_for_training(data_frame, testing_percentage)
             
-            functions.transform_DFpredicition_to_array(training_data,linear_equation)
+            #functions.transform_DFpredicition_to_array(training_data,linear_equation)
             
             predicted_result_from_testing_data = functions.transform_DFpredicition_to_array(testing_data,linear_equation)
             predicted_result_from_training_data = functions.transform_DFpredicition_to_array(training_data,linear_equation)
@@ -158,7 +158,26 @@ while menu_parameter:
             
         if menu_parameter3.lower() =="2":
             start = functions.time.time()
-            functions.classification_tree_prediciton_and_diagram(df)
+            
+            print
+            print("Please how much data you want for validating a model, e.g. 0.2")
+            testing_percentage = input("Please Enter    ")
+            print("")
+            training_data, testing_data = functions.data_frame_split_for_training(df, testing_percentage)
+            usrinput = input("Please input predictor    ")
+            tree_prediction_training, clf_fit = functions.classification_tree_prediciton_for_training(training_data,usrinput)
+            print("Your predition for predicitor "+str(usrinput)+ " is "+ str(tree_prediction_training)+str("\n"))
+            #above, get the classification tree model and make the prediciton only for training data
+            #below, get the classification tree prediition based on testing data
+            #       turn testint data and predicition data based on testing data into 2d array
+            
+            tree_prediciton_testing = functions.classification_tree_prediciton_for_testing(testing_data,clf_fit)
+            tree_prediciton_testing_2d_array = functions.transform_DFY_to_2d_array(testing_data)
+            normalized, non_normalized = functions.classification_tree_score(tree_prediciton_testing_2d_array,tree_prediciton_testing)
+            #print(tree_prediciton_testing_2d_array,tree_prediciton_testing)
+            print("The accuracy percentage is "+str(normalized)+" and the accuracy number is "+ str(non_normalized))
+            
+            
             end = functions.time.time()
             print(" ")
             print("Time needed to implement this function: "+str(end - start))
