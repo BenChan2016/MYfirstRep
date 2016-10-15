@@ -104,29 +104,32 @@ while menu_parameter:
             testing_percentage = input("Please Enter    ")
             print("")
             training_data, testing_data = functions.data_frame_split_for_training(data_frame, testing_percentage)
-            #print(training_data)
-            #print(testing_data)
-            functions.make_prediction(training_data,linear_equation)
             
-            predicted_result_from_testing_data = functions.make_prediction(testing_data,linear_equation)
-            predicted_result_from_training_data = functions.make_prediction(training_data,linear_equation)
-            #predicted_result_from_testing_data = np.array(predicted_result_from_testing_data).astype(float)
-            #redicted_result_from_testing_data = functions.make_prediction(testing_data,linear_equation)
+            functions.transform_DFpredicition_to_array(training_data,linear_equation)
+            
+            predicted_result_from_testing_data = functions.transform_DFpredicition_to_array(testing_data,linear_equation)
+            predicted_result_from_training_data = functions.transform_DFpredicition_to_array(training_data,linear_equation)
             
             dfListY = testing_data.iloc[:,1].tolist()
             dfListY_training = training_data.iloc[:,1].tolist()
-            #dfListY = np.array(dfListY).astype(float)
-            #dfListY = testing_data.iloc[:,1].tolist()
             
-            #print("DLLISTY")
-            #print(dfListY)
             print("The median absolute error for testing data is " + str(functions.median_absolute_error(dfListY,predicted_result_from_testing_data)))
+            print("")
             print("The median absolute error for training data is " + str(functions.median_absolute_error(dfListY_training, predicted_result_from_training_data)))
+            print("")
             print("The R^2 score for testing data is " + str(functions.r2_score(dfListY,predicted_result_from_testing_data)))
+            print("")
             print("The R^2 score for training data is " + str(functions.r2_score(dfListY_training, predicted_result_from_training_data)))
+            
+            user_input_predictor = functions.get_predictor_one_D(linear_equation)
+            prediciton_for_user = functions.make_prediciton_beta(user_input_predictor,linear_equation)
+            print("Your prediciton value is "+str(prediciton_for_user)+" in array-like format")
+            
             end = functions.time.time()
             print(" ")
             print("Time needed to implement this function: "+str(end - start))
+            
+            
             
         elif menu_parameter1.lower()=="no":
             menu_parameter = False

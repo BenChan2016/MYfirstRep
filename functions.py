@@ -5,6 +5,12 @@ Created on Sat Oct  8 09:44:28 2016
 
 @author: ben
 """
+if __name__== '__main__':
+    print("<functons.py is beinf run standalone>"+str("\n"))
+else: 
+    print("<functons.py is imported and being used>"+str("\n"))
+    
+    
 
 import pandas as pd
 from sklearn.linear_model import LinearRegression
@@ -149,19 +155,18 @@ def data_frame_split_for_training(df,percentage):
     
     
 "Calculate the predicated value Y based on users' input and show the regression question"    
-#def get_predictor_one_D(linear_equation):
-#    print('Please enter the Xn in "X1,X2,X3...,Xn" format')
-#    print("In your case, your n is "+str(len(linear_equation.coef_)))
-#    usrinput = input(">>> Input: ")
-#    print("Your input is "+usrinput) 
-#    Xn_pred = re.split(",", usrinput)     #http://stackoverflow.com/questions/10974932/python-split-string-based-on-regular-expression
-#    Xn_pred = [float(i) for i in Xn_pred] #float(i) for i in lst]
-#    #old fashion way: for i in range(0,len(a)) :
+def get_predictor_one_D(linear_equation):
+    print('Please enter the Xn in "X1,X2,X3...,Xn" format')
+    print("In your case, your n is "+str(len(linear_equation.coef_)))
+    usrinput = input(">>> Input: ")
+    print("Your input is "+usrinput) 
+    Xn_pred = re.split(",", usrinput)     #http://stackoverflow.com/questions/10974932/python-split-string-based-on-regular-expression
+    Xn_pred = [float(i) for i in Xn_pred] #float(i) for i in lst]
+    #old fashion way: for i in range(0,len(a)) :
     #                     a[i] = float(a[i])
-#    print(Xn_pred)
-#    return Xn_pred
+    return Xn_pred
     
-def make_prediction(data_frame,lr_fitted):
+def transform_DFpredicition_to_array(data_frame,lr_fitted):
     #turn a dataframe inro 2d list
     num_of_row = data_frame.shape[0]
     listy   = [[]]*num_of_row
@@ -172,19 +177,14 @@ def make_prediction(data_frame,lr_fitted):
     prediction_array = make_prediciton_beta(listy,lr_fitted)
     return prediction_array
     
-def make_prediciton_beta(Xn_pred,lr_fitted):      # Xn_pred can be a 2d array
+def make_prediciton_beta(Xn_pred,lr_fitted):      # Xn_pred can be a 2d array-like
     array = lr_fitted.predict(Xn_pred)            # the input for predic argument can be 2d array
-    #print("predition is    ")
-    
-    #array = np.array(array).tolist()
-    #print(array)
-    #print("for "+ str(Xn_pred) +"respectively")
     return array
     
     
 #def make_prediction(Xn_pred, lr, df):
 #    result = 0
-#     for i in range(0,len(lr.coef_)):
+#    for i in range(0,len(lr.coef_)):
 #        result += lr.coef_[i]*Xn_pred[i] 
 #    result += lr.intercept_
 #    print("\n")
