@@ -91,7 +91,7 @@ def linear_regression(excel_file):
     # print(Xn)
     lr = LinearRegression()  ##http://stackoverflow.com/questions/19991445/run-an-ols-regression-with-pandas-data-frame
     lr.fit(Xn, Y)
-    return df, lr
+    return lr
     
 def print_equation(df, lr):
     print('coef is:  '+str(lr.coef_))
@@ -108,6 +108,20 @@ def print_equation(df, lr):
     reg_equation += str(lr.intercept_)
     print(reg_equation)
     
+def classification_model_building(df):
+    dfListY = df.iloc[:,1].tolist()
+    #dfListX = df.iloc[:,2:].tolist() 
+    num_of_row = df.shape[0]
+    listy   = [[]]*num_of_row
+    for i in range(0,num_of_row):      # turn row into a 2d list
+        listy[i] =df.iloc[i,2:].tolist()
+        #print(listy[i])
+    
+    #print(dfListY)
+    #print(listy)
+    clf = tree.DecisionTreeClassifier()
+    clf = clf.fit(listy,dfListY)
+    return clf
     
 def classification_tree_prediciton_for_training(df,usrinput):
     #http://stackoverflow.com/questions/13730468/from-nd-to-1d-arrays
