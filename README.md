@@ -16,21 +16,21 @@ A. Data Preparation
    3. Show non digital row
    
 B. Data Science Tool kit
-   1. Regression  
-      1.1 Show input 
-      1.2 Make prediction  
-      1.3 Plot graph 
-      1.4 Regression diagnosis   
-   2. Decision Tree
-      1.1 Show input
-      1.2 Make prediction
-      1.3 Plot graph
-      1.4 Decision Tree diagnosis
-   3. Time Series
-      1.1 Show input
-      1.2 Make prediction
-      1.3 Plot graph
-      1.4 Time Series diagnosis
+   1. Regression           
+      1.1 Show input             
+      1.2 Make prediction           
+      1.3 Plot graph             
+      1.4 Regression diagnosis               
+   2. Decision Tree           
+      1.1 Show input          
+      1.2 Make prediction           
+      1.3 Plot graph             
+      1.4 Decision Tree diagnosis            
+   3. Time Series          
+      1.1 Show input          
+      1.2 Make prediction           
+      1.3 Plot graph          
+      1.4 Time Series diagnosis           
       
 
 
