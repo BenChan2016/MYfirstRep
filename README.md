@@ -1,3 +1,6 @@
 # MYfirstRep
 
-Please put functions.py and temp.py under same directory 
+Development branch is where all .py files should be placed.
+Put development.py and functions.py under same directory.
+
+
