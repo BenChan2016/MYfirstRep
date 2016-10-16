@@ -52,6 +52,14 @@ menu_para_C_3_1_1 = True
 model_built = False
 
 
+#This menu is actioned by <n> to exit or <any button> to continue#
+#This menu is classified by three levels, where A,B are first, so on and so forth.
+#Lesson to learn when creating this menu: #
+#1. should create functions without any dependency with other functions#
+#2. Framework should be created first, e.g menu#
+#3. all variable naming standard should be done at the very first stage of a development process#
+#4. Class vs Function. Decisison should be made
+
 
 while(menu_para_first_level==True):
     
@@ -255,6 +263,9 @@ while(menu_para_first_level==True):
                     while(menu_para_B_1_1_1==True):
                         # implementation
                         usrinput = input("Please input predictor    ")
+                        #clf_fit here is dummy and never used
+                        # need to fix classification_tree_prediciton_for_training function to make it more efficient
+                        
                         tree_prediction_training, clf_fit = functions.classification_tree_prediciton_for_training(training_data,usrinput)
                         print("Your predition for predicitor "+str(usrinput)+ " is "+ str(tree_prediction_training)+str("\n"))
                         user_choice = input("Press <n> to go back one level or <any button> to repeat")
