@@ -59,7 +59,25 @@ def drop_space_nondigital(df):
     data_frame = df.replace('[^\d]', np.nan, regex=True) #change the field to null when the first digital is not digital
     ### You can add the regular expression you like
     return data_frame.dropna()  # drop null
+
     
+def swap_columns_index(name_1,name_2,df):
+
+    cols = list(df.columns.values)
+    index_name_1, index_name_2 = cols.index(name_1), cols.index(name_2)   #get the selected index of a dataframe based on selected column name
+    print(index_name_1,index_name_2)
+    print(df)
+    temp_1 = df.iloc[:,index_name_1].copy()   #if no copy, then temp_1 is pointed to df.iloc[:,index_name_1] and is subject to the change of df.iloc[:,index_name_1] = df.iloc[:,index_name_2] 
+    df.iloc[:,index_name_1] = df.iloc[:,index_name_2] 
+    df.iloc[:,index_name_2] = temp_1
+    print(df)
+    #cols[index_name_1],cols[index_name_2] = cols[index_name_2],cols[index_name_1]
+    
+    
+    
+    return df
+    
+
         
 "Show basic regression_statistic and print it to users" 
 def show_regression_statistic(excel_file):

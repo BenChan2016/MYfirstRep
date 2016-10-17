@@ -9,6 +9,7 @@ This is a temporary script file.
 
 import functions # I think this is better than from functions import * when coming to maintance cost
 import numpy as np
+import re
 "You should put functions.py and temp.py under same directory"
 
 #"1.ask usr to input the location of the file"
@@ -116,6 +117,18 @@ while(menu_para_first_level==True):
         elif user_choice.lower()== "2":
             while(menu_para_A_1==True):
                 # implementation
+                print("Please input two columns name that you would like to switch and is sperated by comma, e.g. X1,X2 " )
+                column_name = input("Please Enter   ") #string
+                column_name = str(column_name)
+                column_name = column_name.replace(" ","")         
+                column_name_array = re.split(",",column_name)
+                print(column_name_array[0],column_name_array[1])
+                df = functions.swap_columns_index(column_name_array[0],column_name_array[1],df)
+                print("")
+                print("Your changed file ")
+                print("")
+                #print(df.head())
+                print("")
                 user_choice = input("Press <n> to go back one level or <any button> to repeat process")
                 if user_choice.lower()== "n":
                     break
