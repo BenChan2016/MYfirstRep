@@ -30,7 +30,11 @@ B. Data Science Tool kit
       1.1 Show input          
       1.2 Make prediction           
       1.3 Plot graph          
-      1.4 Time Series diagnosis           
+      1.4 Time Series diagnosis         
+
+
+Big Data Version useful links:
+http://swaywang.blogspot.hk/2012/05/pythoncsv.html  
       
 
 
